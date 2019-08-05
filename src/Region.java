@@ -1,3 +1,4 @@
+import BaseSettings.BS;
 import Functional.Modificator;
 import Functional.Maps.Position;
 
@@ -36,7 +37,7 @@ public class Region {
         }
     }
     public int CostOfInfrastructure(){
-        return (int) (Math.pow(1.4, infrastructure) * World.baseCostInfrasructure * (100 - 5* prosperity) / 100);
+        return (int) (Math.pow(1.4, infrastructure) * BS.baseCostInfrasructure * (100 - 5* prosperity) / 100);
     }
     public void UpgradeInfrastructure(){
         infrastructure++;
@@ -79,11 +80,11 @@ public class Region {
 
     // эти два метода сделаны для вывода в окно региона
     public void UpdateProfitRR() {
-        profitRR = Math.min(population, squareOfGround * effectivity) * World.valueRR[resource] * infrastructure * (100 - autonomy) * World.baseProfitFromRegion / 100;
+        profitRR = Math.min(population, squareOfGround * effectivity) * World.valueRR[resource] * infrastructure * (100 - autonomy) * BS.baseProfitFromRegion / 100;
     }
 
     public void UpdateProfitMineral() {
-        profitMineral = (5 + infrastructure) * World.valueMineral[mineral] * (100 - autonomy) * baseMineralProduction * World.baseProfitFromMineral / 100;
+        profitMineral = (5 + infrastructure) * World.valueMineral[mineral] * (100 - autonomy) * baseMineralProduction * BS.baseProfitFromMineral / 100;
     }
 
 

@@ -1,14 +1,38 @@
 package Adv;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Financier extends Adv.Advisor  {
-    private int baseNumberOfAdvisorChar = 1;
 
     public Financier() {
-        name = "Ildar Zagretdinov";
-        ability = (int) (Math.random() * baseNumberOfAdvisorChar);
+        numChar = 2;
+        ability = (int) (Math.random() * numChar);
+        abilityName = abilityNames.get(ability);
         if (ability == 0){
-            modBuildingCost = 90;
+            mod[1] = 90;
         }
+        if (ability == 1){
+            mod[19] = 10;
+        }
+        if (ability == 2){
+            mod[21] = 10;
+        }
+    }
+    private static List<String> abilityNames = new ArrayList<>();
+    static {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream("src\\Adv\\Text\\AbilityNames\\Cleric")))) {
+            String nextLine;
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                abilityNames.add(nextLine);
+            }
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

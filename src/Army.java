@@ -1,4 +1,5 @@
 import Adv.General;
+import BaseSettings.BS;
 import Functional.Maps.Position;
 
 public class Army {
@@ -19,7 +20,7 @@ public class Army {
     private int equipment; // это средняя экипированность на тысячу солдат. В начале игры будет где то 1000, к концу дойдет до 2000.
     // Увеличивает как урон от огня, так и защиту. Рассчитывается как средняя экипированность делить на количество тысяч солдат
     private int movement;
-    private int maxMovement = World.baseMaxMovement;
+    private int maxMovement = BS.baseMaxMovement;
     private int prof; //2 если ополчение, 3 если наемная армия
     private General general;
     private Position position;
@@ -127,8 +128,8 @@ public class Army {
     }
     private void UpdateMaxEquipment(){
         maxEquipment = 0;
-        for (int i = 0; i < World.equipmentOfSquade.length; i++){
-            maxEquipment += World.equipmentOfSquade[i] * armyMan[i];
+        for (int i = 0; i < BS.equipmentOfSquade.length; i++){
+            maxEquipment += BS.equipmentOfSquade[i] * armyMan[i];
         }
     }
     public void UpdateOrganisation(int mod){
@@ -153,8 +154,8 @@ public class Army {
     public void Employ(int num){
         armyMan[num] +=1000;
         UpdateSF();
-        maxEquipment += World.equipmentOfSquade[num];
-        totalEquipment += World.equipmentOfSquade[num];
+        maxEquipment += BS.equipmentOfSquade[num];
+        totalEquipment += BS.equipmentOfSquade[num];
         UpdateEquipment();
     }
 

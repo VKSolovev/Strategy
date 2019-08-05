@@ -1,5 +1,6 @@
 import Adv.*;
 import Adv.Advisor;
+import BaseSettings.BS;
 import Estate.Estate;
 import Estate.Generals;
 import Estate.Manufactor;
@@ -33,7 +34,7 @@ public class Gov {
                 m++;
             }
             modificator[j] = new Modificator(Integer.parseInt(string.get(k)), string.get(k+1), Integer.parseInt(string.get(k+2)),
-                    World.ammountMod, mods[0], mods[1]);
+                    BS.numMod, mods[0], mods[1]);
             j++;
             i++;
         }
@@ -51,8 +52,8 @@ public class Gov {
     private int modAutonomy = 0;
     private boolean isPlayer = true;
     private int profitFromEstates = 10;
-    private int[] powerIncrease = new int[World.baseNumberOfEstates];
-    private int[] loyalityIncrease = new int[World.baseNumberOfEstates];
+    private int[] powerIncrease = new int[BS.baseNumberOfEstates];
+    private int[] loyalityIncrease = new int[BS.baseNumberOfEstates];
     private int modShock; //в процентах
     private int modFire;
     private int modTactic;
@@ -74,7 +75,32 @@ public class Gov {
 
     private Modificator[] modificator = new Modificator[1];
 // обновляем все моды; сначала обнуляем затем добавляем во всех структурах, которые влияют на них
-    public void UpdateMod(){
+    private void AddToMod(int[] array){
+        modAdvisorCost += array[0];
+        modBuildingCost += array[1];
+        modArmyCreation += array[2];
+        modRebel += array[3];
+        modInterest += array[4];
+        modPrestige += array[5];
+        modLegecimacy += array[6];
+        modAdm += array[7];
+        modAutonomy += array[8];
+        modIncreaseMorale += array[9];
+        modIncreaseOrganisation += array[11];
+
+        modShock += array[12];
+        modFire += array[13];
+        modTactic += array[14];
+        modMorale += array[15];
+        modOrganisation += array[16];
+        modExchangeReligion += array[17];
+        modExchangeCulture += array[18];
+        modProfitFromProduction += array[19];
+        modProfitFromRegion += array[20];
+        modProfitFromMineral += array[21];
+        modProfitFromCity += array[22];
+    }
+    private void NullMod(){
         modAdvisorCost =0;
         modBuildingCost =0;
         modArmyCreation =0;
@@ -98,42 +124,18 @@ public class Gov {
         modProfitFromRegion =0;
         modProfitFromMineral =0;
         modProfitFromCity =0;
-
+    }
+    public void UpdateMod(){
+        NullMod();
         for (int i = 0; i < modificator.length; i++){
             if (modificator[i].getIs()) {
-                modAdvisorCost += modificator[i].getModificator()[0];
-                modBuildingCost += modificator[i].getModificator()[1];
-                modArmyCreation += modificator[i].getModificator()[2];
-                modRebel += modificator[i].getModificator()[3];
-                modInterest += modificator[i].getModificator()[4];
-                modPrestige += modificator[i].getModificator()[5];
-                modLegecimacy += modificator[i].getModificator()[6];
-                modAdm += modificator[i].getModificator()[7];
-                modAutonomy += modificator[i].getModificator()[8];
-                modIncreaseMorale += modificator[i].getModificator()[9];
-                modIncreaseOrganisation += modificator[i].getModificator()[11];
-
-                modShock += modificator[i].getModificator()[12];
-                modFire += modificator[i].getModificator()[13];
-                modTactic += modificator[i].getModificator()[14];
-                modMorale += modificator[i].getModificator()[15];
-                modOrganisation += modificator[i].getModificator()[16];
-                modExchangeReligion += modificator[i].getModificator()[17];
-                modExchangeCulture += modificator[i].getModificator()[18];
-                modProfitFromProduction += modificator[i].getModificator()[19];
-                modProfitFromRegion += modificator[i].getModificator()[20];
-                modProfitFromMineral += modificator[i].getModificator()[21];
-                modProfitFromCity += modificator[i].getModificator()[22];
-
+                AddToMod(modificator[i].getModificator());
             }
 
         }
         for (int i = 0; i < advList.size(); i++){
             if (advList.get(i).getHaveJob() > 0) {
-                modBuildingCost += advList.get(i).getModBuildingCost();
-                modTactic += advList.get(i).getModTactic();
-                modShock += advList.get(i).getModShock();
-                modFire += advList.get(i).getModFire();
+                AddToMod(advList.get(i).getMod());
             }
         }
 
@@ -153,7 +155,7 @@ public class Gov {
                     if (regionControl.get(reg).getCity()[cit].getPlant().size() != 0){
                         regionControl.get(reg).getCity()[cit].getPlant().get((int) (Math.random() * regionControl.get(reg).getCity()[cit].getPlant().size())).Upgrade();
                     } else {
-                        regionControl.get(reg).getCity()[cit].newPlant((int) (Math.random() * World.numberOfCR));
+                        regionControl.get(reg).getCity()[cit].newPlant((int) (Math.random() * BS.numberOfCR));
                     }
                     estate[i].setManufatory(false);
                 }
@@ -185,7 +187,7 @@ public class Gov {
 
 
     // займы
-    private int interest = World.baseInterest;
+    private int interest = BS.baseInterest;
     private ArrayList<Debt> debt = new ArrayList<>();
     private int maxDebt;
     private int costDebt;
@@ -218,8 +220,8 @@ public class Gov {
     private ArrayList<General> general = new ArrayList<>();
     // призываем советника
     public void CreateAdvisor(String adv){
-        if (adm > World.baseAdvisorCost * ( 100 + modAdvisorCost) /100){
-            adm -= World.baseAdvisorCost * ( 100 + modAdvisorCost) /100;
+        if (adm > BS.baseAdvisorCost * ( 100 + modAdvisorCost) /100){
+            adm -= BS.baseAdvisorCost * ( 100 + modAdvisorCost) /100;
             if (adv.equals("Diplomat")){
                 advList.add(new Diplomat());
             }
@@ -303,7 +305,7 @@ public class Gov {
     public void UpdateEstate(){
         int commonPower = 0;
         for (int i =0; i < estate.length; i++){
-            loyalityIncrease[i] = World.baseLoyalityIncrease;
+            loyalityIncrease[i] = BS.baseLoyalityIncrease;
             estate[i].setLoyalityIncrease(loyalityIncrease[i]);
             powerIncrease[i] = estate[i].getIsInLobby();
             estate[i].setPowerIncrease(powerIncrease[i]);
@@ -329,8 +331,8 @@ public class Gov {
     //обновляем производство и спрос на все ресурсы. Заодно обновляем религию, культуру и восстания
     public void UpdatePD() {
         for (Region value : regionControl) {
-            World.totalRegionProduction[value.getResource()] += Math.min(value.getPopulation(), value.getSquareOfGround() * value.getEffectivity()) * World.baseProfitFromRegion;
-            World.totalMineralProduction[value.getMineral()] += (5 + value.getInfrastructure()) * value.getBaseMineralProduction() * (50 + value.getProsperity()) * World.baseProfitFromMineral;
+            World.totalRegionProduction[value.getResource()] += Math.min(value.getPopulation(), value.getSquareOfGround() * value.getEffectivity()) * BS.baseProfitFromRegion;
+            World.totalMineralProduction[value.getMineral()] += (5 + value.getInfrastructure()) * value.getBaseMineralProduction() * (50 + value.getProsperity()) * BS.baseProfitFromMineral;
             int mod = 0; // модификатор восстания из-за культуры и религии
             if (culture != value.getCulture()) {
                 mod += 2;
@@ -339,10 +341,10 @@ public class Gov {
                 mod += 4;
             }
             value.UpdateRebelLevel(modRebel + mod);
-            if (value.ExchangeReligion(World.baseChanceOfChangingReligion + modExchangeReligion) && value.getReligion() != religion) {
+            if (value.ExchangeReligion(BS.baseChanceOfChangingReligion + modExchangeReligion) && value.getReligion() != religion) {
                 value.setReligion(religion);
             }
-            if (value.ExchangeCulture(World.baseChanceOfChangingCulture + modExchangeCulture) && value.getCulture() != culture) {
+            if (value.ExchangeCulture(BS.baseChanceOfChangingCulture + modExchangeCulture) && value.getCulture() != culture) {
                 value.setCulture(culture);
             }
             for (int j = 0; j < value.getCity().length; j++) {
@@ -355,18 +357,18 @@ public class Gov {
                 }
                 value.getCity()[j].UpdateRebelLevel(modRebel + mod);
                 value.getCity()[j].BuildingTurn();
-                if (value.getCity()[j].ExchangeReligion(World.baseChanceOfChangingReligion + modExchangeReligion) && value.getCity()[j].getReligion() != religion) {
+                if (value.getCity()[j].ExchangeReligion(BS.baseChanceOfChangingReligion + modExchangeReligion) && value.getCity()[j].getReligion() != religion) {
                     value.setReligion(religion);
                 }
                 for (int k = 0; k < value.getCity()[j].getPlant().size(); k++) {
-                    World.totalCityProduction[value.getCity()[j].getPlant().get(k).getResourceOfPlant()] += value.getCity()[j].getPlant().get(k).getLevelOfPlant() * World.baseProfitFromProduction;
-                    for (int l = 0; l < World.numberOfRR; l++) {
+                    World.totalCityProduction[value.getCity()[j].getPlant().get(k).getResourceOfPlant()] += value.getCity()[j].getPlant().get(k).getLevelOfPlant() * BS.baseProfitFromProduction;
+                    for (int l = 0; l < BS.numberOfRR; l++) {
                         World.totalPlantRRDemand[l] += value.getCity()[j].getPlant().get(k).getDemand("RR", l);
                     }
-                    for (int l = 0; l < World.numberOfMineral; l++) {
+                    for (int l = 0; l < BS.numberOfMineral; l++) {
                         World.totalPlantMineralDemand[l] += value.getCity()[j].getPlant().get(k).getDemand("Mineral", l);
                     }
-                    for (int l = 0; l < World.numberOfCR; l++) {
+                    for (int l = 0; l < BS.numberOfCR; l++) {
                         World.totalPlantCRDemand[l] += value.getCity()[j].getPlant().get(k).getDemand("CR", l);
 
                     }
@@ -394,7 +396,7 @@ public class Gov {
             int aut;
             aut = (int) (Math.tan((Math.pow(capital.GetX()- regionControl.get(i).getPosition().GetX(), 2) +
                     Math.pow(regionControl.get(i).getPosition().GetY() - capital.GetY(), 2)))
-                    / Math.sqrt(Math.pow(World.heigthOfMap, 2) + Math.pow(World.wideOfMap, 2)) * World.baseAutonomy)+mod + modAutonomy;
+                    / Math.sqrt(Math.pow(World.heigthOfMap, 2) + Math.pow(World.wideOfMap, 2)) * BS.baseAutonomy)+mod + modAutonomy;
             if (aut > 100){
                 aut =100;
             }
@@ -422,7 +424,7 @@ public class Gov {
                 }
                 aut = (int) (Math.tan((Math.pow(capital.GetX()- regionControl.get(i).getCity()[j].getPosition().GetX(), 2) +
                         Math.pow(regionControl.get(i).getCity()[j].getPosition().GetY() - capital.GetY(), 2)))
-                        / (Math.pow(World.heigthOfMap, 2) + Math.pow(World.wideOfMap, 2)) * World.baseAutonomy) + mod + modAutonomy;
+                        / (Math.pow(World.heigthOfMap, 2) + Math.pow(World.wideOfMap, 2)) * BS.baseAutonomy) + mod + modAutonomy;
                 if (aut > 100){
                     aut =100;
                 }
@@ -463,7 +465,7 @@ public class Gov {
         for (Army value : army) {
             costArmy += value.GetCost();
         }
-        costArmy *= World.baseCostArmy * modCostArmy;
+        costArmy *= BS.baseCostArmy * modCostArmy;
     }
     // обновляем расход на бюрократию
     private void UpdateCostAdm () {
@@ -471,7 +473,7 @@ public class Gov {
         for (Region value : regionControl) {
             n += value.getCity().length;
         }
-        costAdm = n * World.baseCostAdm * modCostAdm;
+        costAdm = n * BS.baseCostAdm * modCostAdm;
     }
     // обновляем расход на долги. Можно использовать только раз в ход
     private void UpdateCostDebt () {
@@ -545,9 +547,9 @@ public class Gov {
     }
     //обновляем другие ресурсы
     public void UpdateAPL() {
-        adm += World.baseAdm + modAdm;
-        prestige -= prestige * (100 - World.basePrestige) / 100 - modPrestige;
-        legicimacy += World.baseLegicimacy + modLegecimacy;
+        adm += BS.baseAdm + modAdm;
+        prestige -= prestige * (100 - BS.basePrestige) / 100 - modPrestige;
+        legicimacy += BS.baseLegicimacy + modLegecimacy;
     }
 
     // строительство
@@ -626,16 +628,16 @@ public class Gov {
         }
         if (arm != null) {
             arm.Employ(armyMen);
-            money -= World.baseCostCreationSquad[armyMen];
+            money -= BS.baseCostCreationSquad[armyMen];
         }
     }
     public void CreateArmy(City cit){
-        if (cit.CheckPosition() & CheckMoney(World.baseCostCreationSquad[0] * (100 + modArmyCreation))){
+        if (cit.CheckPosition() & CheckMoney(BS.baseCostCreationSquad[0] * (100 + modArmyCreation))){
             Army newArmy = new Army(counryNum, modMorale, modOrganisation, cit.getPosArmy(), 3);
             newArmy.Employ(0);
             army.add(newArmy);
             World.mof.AddArmy(counryNum, cit.getPosArmy());
-            money -= World.baseCostCreationSquad[0] * (100 + modArmyCreation);
+            money -= BS.baseCostCreationSquad[0] * (100 + modArmyCreation);
         }
     }
     // cетаем генерала
@@ -670,10 +672,10 @@ public class Gov {
             partEqp = 1;
         }
         Army arm = new Army(cit.Mobilisation(), counryNum, modMorale, modOrganisation,  cit.getPosArmy(), 2, partEqp);
-        if (cit.CheckPosition() & !cit.isMobilisation() && CheckMoney(arm.getMaxEquipment() * World.baseCostMobilisation)) {
+        if (cit.CheckPosition() & !cit.isMobilisation() && CheckMoney(arm.getMaxEquipment() * BS.baseCostMobilisation)) {
             mobilisateArmy.add(arm);
             cit.setMobilisation(true);
-            PlusMoney(arm.getMaxEquipment() * World.baseCostMobilisation);
+            PlusMoney(arm.getMaxEquipment() * BS.baseCostMobilisation);
             maxEquipment -= arm.getMaxEquipment();
             equipment -= arm.getTotalEquipment();
             World.mof.AddArmy(counryNum, cit.getPosArmy());

@@ -1,3 +1,4 @@
+import BaseSettings.BS;
 import Functional.Maps.CityAttack;
 import Functional.Maps.CityCoordinate;
 import Functional.Maps.MapOfArmies;
@@ -34,48 +35,6 @@ public class World {
         CityAttack cityAttack = new CityAttack(positions, cityCoordinates);
     }
 
-    // базовые настройки
-    public  static int ammountMod = 22;
-
-    public static int baseProfitFromCity = 1;
-    public static int baseProfitFromRegion = 1;
-    public static int baseProfitFromMineral = 1;
-    public static int baseProfitFromProduction = 1;
-    public static int baseCostArmy = 1;
-    public static int baseCostAdm = 1;
-    public static int baseAdvisorCost = 1;
-    public static int baseInterest = 3;
-    public static int baseAutonomy = 1;
-
-    public static int numberOfEvent;
-
-    public static int baseNumberOfEstates;
-    public static int baseLoyalityIncrease = 1;
-
-    public static int baseAdm = 5;
-    public static int basePrestige = 5;
-    public static int baseLegicimacy = 50;
-
-
-    public static int numberOfCR = 1;
-    public static int numberOfRR = 1;
-    public static int numberOfMineral = 1;
-    public static int numberOfBuildings = 1;
-    public static int[] baseCostBuild = new int[numberOfBuildings];
-    public static int baseCostPlant = 1;
-    public static int baseCostInfrasructure = 1;
-
-    public static int baseMaxMovement = 5;
-    public static int[] equipmentOfSquade = {1000, 1200, 1200, 1500, 1700, 2000, 2000, 1000};
-    public static int baseDamage = 5;
-    public static int[] baseCostCreationSquad;
-    public static int baseMobilisation;
-    public static int baseCostMobilisation;
-
-    public static int possibleAdvisors = 15;
-
-    public static int baseChanceOfChangingReligion = 2;
-    public static int baseChanceOfChangingCulture = 5;
 
     // компонены мира
     private boolean endGame = false;
@@ -101,27 +60,27 @@ public class World {
 
     // цены на ресурсы
 
-    public static int[] valueRR = new int[numberOfRR];
-    public static int[] valueMineral = new int[numberOfMineral];
-    public static int[] valueCR = new int[numberOfCR];
+    public static int[] valueRR = new int[BS.numberOfRR];
+    public static int[] valueMineral = new int[BS.numberOfMineral];
+    public static int[] valueCR = new int[BS.numberOfCR];
 
-    private int[] baseValueCR =  new int[numberOfCR];
-    private int[] baseValueRR = new int[numberOfRR];
-    private int[] baseValueMineral = new int[numberOfMineral];
+    private int[] baseValueCR =  new int[BS.numberOfCR];
+    private int[] baseValueRR = new int[BS.numberOfRR];
+    private int[] baseValueMineral = new int[BS.numberOfMineral];
 
     // производство ресурсов
-    public static int[] totalCityProduction = new int[numberOfCR];
-    public static int[] totalRegionProduction = new int[numberOfRR];
-    public static int[] totalMineralProduction = new int[numberOfMineral];
+    public static int[] totalCityProduction = new int[BS.numberOfCR];
+    public static int[] totalRegionProduction = new int[BS.numberOfRR];
+    public static int[] totalMineralProduction = new int[BS.numberOfMineral];
 
     // спрос на ресурсы
-    public static int[] totalPlantCRDemand = new int[numberOfCR];
-    public static int[] totalPlantRRDemand = new int[numberOfRR];
-    public static int[] totalPlantMineralDemand = new int[numberOfMineral];
+    public static int[] totalPlantCRDemand = new int[BS.numberOfCR];
+    public static int[] totalPlantRRDemand = new int[BS.numberOfRR];
+    public static int[] totalPlantMineralDemand = new int[BS.numberOfMineral];
 
-    private int[] basePopulationRRDemand = new int[numberOfRR];
-    private int[] basePopulationMineralDemand = new int[numberOfMineral];
-    private int[] basePopulationCRDemand = new int[numberOfCR];
+    private int[] basePopulationRRDemand = new int[BS.numberOfRR];
+    private int[] basePopulationMineralDemand = new int[BS.numberOfMineral];
+    private int[] basePopulationCRDemand = new int[BS.numberOfCR];
 
     // Служебное
     public static boolean otladka = true;
@@ -221,13 +180,13 @@ public class World {
         army1.UpdateSF();
         army2.UpdateSF();
         while ((army1.getMorale() > 100) && (army2.getMorale() > 100)){
-            army1.Lose(100 - (army2.getFire() *(100 + country.get(country2).getModFire()) * army2.getEquipment()/ army1.getEquipment()/ army1.getAmount()) / 2 - baseDamage);
-            army2.Lose(100 - (army1.getFire() *(100 + country.get(country1).getModFire()) * army1.getEquipment()/ army2.getEquipment()/ army2.getAmount()) / 2 - baseDamage);
+            army1.Lose(100 - (army2.getFire() *(100 + country.get(country2).getModFire()) * army2.getEquipment()/ army1.getEquipment()/ army1.getAmount()) / 2 - BS.baseDamage);
+            army2.Lose(100 - (army1.getFire() *(100 + country.get(country1).getModFire()) * army1.getEquipment()/ army2.getEquipment()/ army2.getAmount()) / 2 - BS.baseDamage);
             army1.UpdateSF();
             army2.UpdateSF();
             if ((army1.getMorale() > 100) && (army2.getMorale() > 100)) {
-                army1.Lose(100 - (army2.getShock() * (100 + country.get(country2).getModShock()) / army1.getAmount()) / 2 - baseDamage);
-                army2.Lose(100 - (army1.getShock() * (100 + country.get(country1).getModShock()) / army2.getAmount()) / 2 - baseDamage);
+                army1.Lose(100 - (army2.getShock() * (100 + country.get(country2).getModShock()) / army1.getAmount()) / 2 - BS.baseDamage);
+                army2.Lose(100 - (army1.getShock() * (100 + country.get(country1).getModShock()) / army2.getAmount()) / 2 - BS.baseDamage);
                 army1.UpdateSF();
                 army2.UpdateSF();
             }
@@ -284,7 +243,7 @@ public class World {
     // считаем цены на ресурсы
     public void Market(){
         //считаем цены на региональные ресурсы
-        for (int j = 0; j < numberOfRR; j++) {
+        for (int j = 0; j < BS.numberOfRR; j++) {
             if (totalRegionProduction[j] != 0) {
                 valueRR[j] = (totalPlantRRDemand[j] + totalPopulation * basePopulationRRDemand[j]) * baseValueRR[j] / totalRegionProduction[j];
             } else {
@@ -292,7 +251,7 @@ public class World {
             }
         }
         //считаем цены на ископаемые ресурсы
-        for (int j = 0; j < numberOfCR; j++) {
+        for (int j = 0; j < BS.numberOfCR; j++) {
             if (totalMineralProduction[j] != 0) {
                 valueMineral[j] = (totalPlantMineralDemand[j] + totalPopulation * basePopulationMineralDemand[j]) * baseValueMineral[j] / totalMineralProduction[j];
             } else {
@@ -300,7 +259,7 @@ public class World {
             }
         }
         // считаем цены на городские товары
-        for (int j = 0; j < numberOfCR; j++) {
+        for (int j = 0; j < BS.numberOfCR; j++) {
             if (totalCityProduction[j] != 0) {
                 valueCR[j] = (totalPlantCRDemand[j] + totalPopulation * basePopulationCRDemand[j]) * baseValueCR[j] / totalCityProduction[j];
             } else {

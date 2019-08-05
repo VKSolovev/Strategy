@@ -1,3 +1,4 @@
+import BaseSettings.BS;
 import Functional.Maps.Distance;
 import Functional.Modificator;
 import Functional.Maps.Position;
@@ -15,7 +16,7 @@ public class City {
 
     //
     private Position position;
-    private Building[] building = new Building[World.numberOfBuildings];
+    private Building[] building = new Building[BS.numberOfBuildings];
     private ArrayList<Plant> plant = new ArrayList<>();
     private int population;
     private int infrastructure;
@@ -53,14 +54,14 @@ public class City {
     public int GetEquipment(){
         int equipment = 0;
         for (int i = 0; i<8; i++){
-            equipment += World.equipmentOfSquade[i] * population * World.baseMobilisation * partArmy[i] / 100;
+            equipment += BS.equipmentOfSquade[i] * population * BS.baseMobilisation * partArmy[i] / 100;
         }
         return equipment;
     }
     public int[] Mobilisation(){
         int[] armyMan = new int[8];
         for (int i = 0; i<8; i++){
-            armyMan[i] = population * World.baseMobilisation * partArmy[i] / 100;
+            armyMan[i] = population * BS.baseMobilisation * partArmy[i] / 100;
         }
         return armyMan;
     }
@@ -96,7 +97,7 @@ public class City {
     }
     // возвращает стоимость постройки здания
     public int CostOfBuilding(int number){
-        return (int) (Math.pow(1.2, building[number].getLevel()) * World.baseCostBuild[building[number].getClassOf()] *
+        return (int) (Math.pow(1.2, building[number].getLevel()) * BS.baseCostBuild[building[number].getClassOf()] *
                 (100 - prosperity - 2*infrastructure) / 100);
     }
     //строит здание
@@ -107,9 +108,9 @@ public class City {
     // возвращает стоимость постройки завода
     public int CostOfPlant(int number){
        if (plant.size() > number || plant.get(number) == null){
-           return World.baseCostPlant * (100 - 2*prosperity) / 100;
+           return BS.baseCostPlant * (100 - 2*prosperity) / 100;
        } else{
-           return (int) ((World.baseCostPlant) * Math.pow(1.3, plant.get(number).getLevelOfPlant()) * (100 - prosperity - 2*infrastructure) / 100);
+           return (int) ((BS.baseCostPlant) * Math.pow(1.3, plant.get(number).getLevelOfPlant()) * (100 - prosperity - 2*infrastructure) / 100);
        }
     }
     public void newPlant(int resource){
@@ -118,7 +119,7 @@ public class City {
     }
 
     public int CostOfInfrastructure(){
-        return (int) (Math.pow(1.4, infrastructure) * World.baseCostInfrasructure * (100 - 5* prosperity) / 100);
+        return (int) (Math.pow(1.4, infrastructure) * BS.baseCostInfrasructure * (100 - 5* prosperity) / 100);
     }
     public void UpgradeInfrastructure(){
         infrastructure++;
@@ -132,7 +133,7 @@ public class City {
             plant.get(i).UpdateProfit();
             profit += plant.get(i).getProfit();
         }
-        profit *= World.baseProfitFromProduction;
+        profit *= BS.baseProfitFromProduction;
     }
     public void BuildingTurn(){
         for (Building value : building) {
@@ -145,7 +146,7 @@ public class City {
     }
     // метод для вывода дохода от налогов
     public void UpdateTax(int mod){
-        tax = population * prosperity * (600 + infrastructure * (100+ mod)) / 700 * (100 - autonomy) * World.baseProfitFromCity / 300000;
+        tax = population * prosperity * (600 + infrastructure * (100+ mod)) / 700 * (100 - autonomy) * BS.baseProfitFromCity / 300000;
     }
     // обновление автономии
 

@@ -1,9 +1,6 @@
 package Estate;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +107,47 @@ public class Manufactor extends Estate {
     }
 }
 /*
-        if (partOfPover >= 500 && loyality >= 300){
+
+        Из того, что надо сделать при создании сословия\
+private static List<String> abilityName = new ArrayList<>();
+    static {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream("src\\Estate\\Texts\\AbilityNames\\Manufactor")))) {
+            String nextLine;
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                abilityName.add(nextLine);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void ActivateAbility(int num){
+        if (num == 0 && ability[0].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 1 && ability[1].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 2 && ability[2].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 3 && ability[3].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 4 && ability[4].getTime() == 0){
+            ability[num].Activate();
+            l
+        }
+    }
+    public void UpdateBonus(){
+    if (partOfPover >= 500 && loyality >= 300){
         } else if (partOfPover >= 400 && loyality >= 300){
         } else if (partOfPover >= 300 && loyality >= 300){
         } else if (partOfPover >= 100 && loyality >= 300){
@@ -119,4 +156,9 @@ public class Manufactor extends Estate {
         } else if (loyality < 200){
         } else {
         }
+        }
+    public List<String> getAbilityName() {
+        return abilityName;
+    }
+
         */
