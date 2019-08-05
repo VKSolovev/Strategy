@@ -1,9 +1,6 @@
 package Estate;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +33,7 @@ public class Generals extends Estate{
     }
     @Override
     public String getBonus(){
-        return "Уровень восстания" + rebelLevel + "Тактика" + tactic;
+        return "Уровень восстания" + mod[3] + "Тактика" + mod[14];
     }
     @Override
     public void ActivateAbility(int num){
@@ -70,36 +67,36 @@ public class Generals extends Estate{
         }
 
         if (partOfPover >= 500 && loyality >= 300){
-            tactic = 3 + modTactic;
-            rebelLevel = 3 + modRebelLevel;
+            mod[14] = 3 + modTactic;
+            mod[3] = 3 + modRebelLevel;
             profit = 8;
         } else if (partOfPover >= 400 && loyality >= 300) {
-            tactic = 3 + modTactic;
-            rebelLevel = -1 + modRebelLevel;
+            mod[14] = 3 + modTactic;
+            mod[3] = -1 + modRebelLevel;
             profit = 9;
         } else if (partOfPover >= 300 && loyality >= 300){
-                tactic = 3 + modTactic;
-                rebelLevel = - 3 + modRebelLevel;
+                mod[14] = 3 + modTactic;
+                mod[3] = - 3 + modRebelLevel;
                 profit = 10;
         }  else if (partOfPover >= 100 && loyality >= 300){
-            tactic = 2 + modTactic;
-            rebelLevel = - 2 + modRebelLevel;
+            mod[14] = 2 + modTactic;
+            mod[3] = - 2 + modRebelLevel;
             profit = 10;
         } else if (partOfPover < 100 && loyality >= 300){
-            tactic = 1 + modTactic;
-            rebelLevel = -1 + modRebelLevel;
+            mod[14] = 1 + modTactic;
+            mod[3] = -1 + modRebelLevel;
             profit = 10;
         } else if (loyality < 100){
-            tactic = -5;
-            rebelLevel = 10;
+            mod[14] = -5;
+            mod[3] = 10;
             profit = 8;
         } else if (loyality < 200){
-            tactic = -2;
-            rebelLevel = 5;
+            mod[14] = -2;
+            mod[3] = 5;
             profit = 9;
         } else {
-            tactic = 0;
-            rebelLevel = 0;
+            mod[14] = 0;
+            mod[3] = 0;
             profit =10;
         }
 

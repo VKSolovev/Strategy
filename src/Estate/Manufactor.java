@@ -77,28 +77,28 @@ public class Manufactor extends Estate {
 
         if (partOfPover >= 500 && loyality >= 300){
             profit = 7;
-            profitFromProduction = modProfitFromProduction + 50;
+            mod[19] = modProfitFromProduction + 50;
         } else if (partOfPover >= 400 && loyality >= 300){
             profit = 8;
-            profitFromProduction = modProfitFromProduction + 40;
+            mod[19] = modProfitFromProduction + 40;
         } else if (partOfPover >= 300 && loyality >= 300){
             profit = 9;
-            profitFromProduction = modProfitFromProduction + 25;
+            mod[19] = modProfitFromProduction + 25;
         } else if (partOfPover >= 100 && loyality >= 300){
             profit = 10;
-            profitFromProduction = modProfitFromProduction +15;
+            mod[19] = modProfitFromProduction +15;
         } else if (partOfPover < 100 && loyality >= 300){
             profit = 10;
-            profitFromProduction = modProfitFromProduction + 10;
+            mod[19] = modProfitFromProduction + 10;
         } else if (loyality < 100){
-            profitFromProduction = -20;
+            mod[19] = -20;
             profit = 7;
         } else if (loyality < 200){
-            profitFromProduction = -10;
+            mod[19] = -10;
             profit = 9;
         } else {
             profit = 10;
-            profitFromProduction = 0;
+            mod[19] = 0;
         }
     }
 

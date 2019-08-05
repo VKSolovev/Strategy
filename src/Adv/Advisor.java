@@ -19,13 +19,6 @@ public abstract class Advisor {
     //список возможных бафов
     protected int[] mod = new int[BS.numMod];
 
-    protected int modBuildingCost;
-
-    // генерал
-    protected int modFire = 0;
-    protected int modShock = 0;
-    protected int modTactic;
-
     public boolean Death(){
         return (Math.random() * 1000000 - (age*age*age)/64 > 0);
     }

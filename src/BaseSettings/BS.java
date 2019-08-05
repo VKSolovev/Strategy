@@ -41,4 +41,9 @@ public class BS {
 
     public static int baseChanceOfChangingReligion = 2;
     public static int baseChanceOfChangingCulture = 5;
+
+
+    public static String[] namesRR = {"Дерево"};
+    public static String[] namesCR = {"Сталь"};
+    public static String[] namesMineral = {"Железная руда"};
 }
