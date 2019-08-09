@@ -1,7 +1,13 @@
 package BaseSettings;
 
+import Technology.Inv;
+import Technology.SubTech;
+
 public class BS {
     public static int numMod = 22;
+    public static String[] nameMod;
+    //TODO Считать из файла эти штуки
+
     public static int baseProfitFromCity = 1;
     public static int baseProfitFromRegion = 1;
     public static int baseProfitFromMineral = 1;
@@ -38,9 +44,16 @@ public class BS {
     public static int baseCostMobilisation;
 
     public static int possibleAdvisors = 15;
+    public static int infrBase = 3;
 
     public static int baseChanceOfChangingReligion = 2;
     public static int baseChanceOfChangingCulture = 5;
+    public static int techNum = 1;
+    public static int[] techCost = {1, 2, 3, 4, 5};
+    public static int[][] numBonSubTech;
+    public static int[][] bonSubTech;
+    public static Inv[][][] inv;
+    public static SubTech[] ST = new SubTech[techNum*3];
 
 
     public static String[] namesRR = {"Дерево"};

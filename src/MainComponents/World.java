@@ -7,7 +7,7 @@ import Functional.Maps.MapOfArmies;
 import Functional.Maps.Position;
 import MainComponents.GovComponents.Army;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -53,11 +53,21 @@ public class World {
     public static List<String> lines;
 
     static {
-        try {
-            lines = Files.readAllLines(Paths.get("src\\Texts\\GovModificator"), StandardCharsets.UTF_8);
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream("src\\Texts\\GovModificator")))) {
+            String nextLine;
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                lines.add(nextLine);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Gov getPlayerGov() {
+        return country.get(0);
     }
 
 

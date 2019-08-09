@@ -1,9 +1,6 @@
 package Estate;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,28 +77,28 @@ public class Manufactor extends Estate {
 
         if (partOfPover >= 500 && loyality >= 300){
             profit = 7;
-            profitFromProduction = modProfitFromProduction + 50;
+            mod[19] = modProfitFromProduction + 50;
         } else if (partOfPover >= 400 && loyality >= 300){
             profit = 8;
-            profitFromProduction = modProfitFromProduction + 40;
+            mod[19] = modProfitFromProduction + 40;
         } else if (partOfPover >= 300 && loyality >= 300){
             profit = 9;
-            profitFromProduction = modProfitFromProduction + 25;
+            mod[19] = modProfitFromProduction + 25;
         } else if (partOfPover >= 100 && loyality >= 300){
             profit = 10;
-            profitFromProduction = modProfitFromProduction +15;
+            mod[19] = modProfitFromProduction +15;
         } else if (partOfPover < 100 && loyality >= 300){
             profit = 10;
-            profitFromProduction = modProfitFromProduction + 10;
+            mod[19] = modProfitFromProduction + 10;
         } else if (loyality < 100){
-            profitFromProduction = -20;
+            mod[19] = -20;
             profit = 7;
         } else if (loyality < 200){
-            profitFromProduction = -10;
+            mod[19] = -10;
             profit = 9;
         } else {
             profit = 10;
-            profitFromProduction = 0;
+            mod[19] = 0;
         }
     }
 
@@ -110,7 +107,47 @@ public class Manufactor extends Estate {
     }
 }
 /*
-        if (partOfPover >= 500 && loyality >= 300){
+
+        Из того, что надо сделать при создании сословия\
+private static List<String> abilityName = new ArrayList<>();
+    static {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream("src\\Estate\\Texts\\AbilityNames\\Manufactor")))) {
+            String nextLine;
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                abilityName.add(nextLine);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void ActivateAbility(int num){
+        if (num == 0 && ability[0].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 1 && ability[1].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 2 && ability[2].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 3 && ability[3].getTime() == 0){
+            ability[num].Activate();
+
+        }
+        if (num == 4 && ability[4].getTime() == 0){
+            ability[num].Activate();
+            l
+        }
+    }
+    public void UpdateBonus(){
+    if (partOfPover >= 500 && loyality >= 300){
         } else if (partOfPover >= 400 && loyality >= 300){
         } else if (partOfPover >= 300 && loyality >= 300){
         } else if (partOfPover >= 100 && loyality >= 300){
@@ -119,4 +156,9 @@ public class Manufactor extends Estate {
         } else if (loyality < 200){
         } else {
         }
+        }
+    public List<String> getAbilityName() {
+        return abilityName;
+    }
+
         */
