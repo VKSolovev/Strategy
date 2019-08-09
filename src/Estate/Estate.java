@@ -1,7 +1,5 @@
 package Estate;
 
-import BaseSettings.BS;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +15,22 @@ public abstract class Estate {
     protected int profit = 10;
     private int basePoverIncrease = -20;
     // дальше идут бафы
-    protected int[] mod = new int[BS.numMod];
     // генералы
+    protected int tactic;
+    protected int rebelLevel;
     protected boolean general = false;
 
     // промышленники
+    protected int profitFromProduction;
     protected int plusMoney = 0;
     protected boolean manufatory = false;
     protected boolean financier = false;
 
+    // кто-нибудь
+    protected int modBuildingCost;
+    protected int profitFromRegion;
+    protected int profitFromMineral;
+    protected int profitFromCity;
 
     public void setPartOfPover(int partOfPover) {
         this.partOfPover = partOfPover;
@@ -35,6 +40,9 @@ public abstract class Estate {
         return profit;
     }
     public void UpdateBonus(){
+        tactic = 0;
+        rebelLevel = 0;
+        profit = 1;
     }
 
     public void UpdateLP(){
@@ -90,6 +98,14 @@ public abstract class Estate {
         return partOfPover;
     }
 
+    public int getTactic() {
+        return tactic;
+    }
+
+    public int getRebelLevel() {
+        return rebelLevel;
+    }
+
     public void setPowerIncrease(int poverIncrease) {
         this.powerIncrease = poverIncrease;
     }
@@ -102,12 +118,32 @@ public abstract class Estate {
         this.power = power;
     }
 
+    public int getModBuildingCost() {
+        return modBuildingCost;
+    }
+
+    public int getProfitFromProduction() {
+        return profitFromProduction;
+    }
+
     public int getPlusMoney() {
         return plusMoney;
     }
 
     public void setPlusMoney(int plusMoney) {
         this.plusMoney = plusMoney;
+    }
+
+    public int getProfitFromRegion() {
+        return profitFromRegion;
+    }
+
+    public int getProfitFromMineral() {
+        return profitFromMineral;
+    }
+
+    public int getProfitFromCity() {
+        return profitFromCity;
     }
 
     public boolean isManufatory() {
@@ -135,8 +171,4 @@ public abstract class Estate {
     }
 
     public abstract List<String> getAbilityName();
-
-    public int[] getMod() {
-        return mod;
-    }
 }

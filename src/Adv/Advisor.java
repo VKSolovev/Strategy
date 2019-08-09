@@ -1,23 +1,25 @@
 package Adv;
 
-import BaseSettings.BS;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class Advisor {
-    protected String name = names.get((int) (Math.random() * names.size()));
+public class Advisor {
+    protected String name;
     protected int level = ((int) (Math.random() * 15)) % 10;
     protected int ability = 0;
     protected int age = (int) (Math.random() * 40) + 100;
     protected int haveJob;
-    protected int numChar;
-    protected String abilityName;
+    protected int numberOfPossibleChar;
     // выводить возраст надо деля на 4
 
     //список возможных бафов
-    protected int[] mod = new int[BS.numMod];
+    protected int modBuildingCost;
+    protected int modTactic;
+
+    // клерик
+    protected int rebeltLevel = 0;
+
+    // генерал
+    protected int modFire = 0;
+    protected int modShock = 0;
+
 
     public boolean Death(){
         return (Math.random() * 1000000 - (age*age*age)/64 > 0);
@@ -25,21 +27,7 @@ public abstract class Advisor {
     public void AgeUp(){
         age++;
     }
-    private static List<String> names = new ArrayList<>();
-    static {
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                new FileInputStream("src\\Adv\\Text\\Names")))) {
-            String nextLine;
-            while ((nextLine = bufferedReader.readLine()) != null) {
-                names.add(nextLine);
-            }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public int getAge() {
         return age/4;
     }
@@ -64,15 +52,19 @@ public abstract class Advisor {
         return haveJob;
     }
 
-    public String getAbilityName(){
-        return abilityName;
+    public int getModBuildingCost() {
+        return modBuildingCost;
     }
 
-    public int[] getMod() {
-        return mod;
+    public int getModTactic() {
+        return modTactic;
     }
 
-    public int getNumChar() {
-        return numChar;
+    public int getModFire() {
+        return modFire;
+    }
+
+    public int getModShock() {
+        return modShock;
     }
 }
