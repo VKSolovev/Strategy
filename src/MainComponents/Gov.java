@@ -50,7 +50,7 @@ public class Gov {
             i++;
         }
     }
-    private boolean isPlayer = true;
+    private boolean player = true;
 
 
     // мдификаторы

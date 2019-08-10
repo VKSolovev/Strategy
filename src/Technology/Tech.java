@@ -5,7 +5,7 @@ import BaseSettings.BS;
 public class Tech {
     public Tech(int num) {
         subTech = new SubTech[3];
-        subTech[0] = BS.ST[num*3];
+        subTech[0] = BS.ST[num*3];//TODO тут идут ссылки, надо заменить на конструктор
         subTech[1] = BS.ST[num*3 + 1];
         subTech[2] = BS.ST[num*3 + 2];
         this.num = num;
